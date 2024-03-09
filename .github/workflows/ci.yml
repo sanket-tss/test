@@ -17,6 +17,7 @@ on:
 env:
   SERVICE_NAME: application
   VERSION: ${{ github.event.inputs.version }}
+  SERVER: ${{ github.event.inputs.server }}
 
 jobs:
   build:
@@ -31,5 +32,6 @@ jobs:
         run: |
           echo "server = ${{ github.event.inputs.server }}"
           echo "version = ${{ github.event.inputs.version }}"
+          echo "env server = ${{ env.SERVER }}"
           echo "env service name = ${{ env.SERVICE_NAME }}"
           echo "env version = ${{ env.VERSION }}"
