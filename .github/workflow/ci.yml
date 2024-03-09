@@ -1,0 +1,35 @@
+name: CI (Build and Push Docker Image)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Specify the version to use'
+        required: true
+      server:
+        description: 'Specify the server to use'        
+        required: true
+        type: choice
+        options:
+          - dev
+          - sandbox
+
+env:
+  SERVICE_NAME: application
+  VERSION: ${{ github.event.inputs.version }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.server }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build 
+        run: |
+          echo "server = ${{ github.event.inputs.server }}"
+          echo "version = ${{ github.event.inputs.version }}"
+          echo "env service name = ${{ env.SERVICE_NAME }}"
+          echo "env version = ${{ env.VERSION }}"
