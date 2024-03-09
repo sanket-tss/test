@@ -29,11 +29,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build 
-        if: ${{ secrets.NAME }} == 'dev'
+        env:
+          NAME: ${{ secrets.NAME }}        
         run: |
           echo "server = ${{ github.event.inputs.server }}"
           echo "version = ${{ github.event.inputs.version }}"
-          echo "secrets ${{ secrets.NAME }} " > file.txt
+          echo "secrets ${{ env.NAME }} " > file.txt
           cat file.txt
           echo "env server = ${{ env.SERVER }}"
           echo "env service name = ${{ env.SERVICE_NAME }}"
