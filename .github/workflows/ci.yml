@@ -32,6 +32,12 @@ jobs:
         env:
           NAME: ${{ secrets.NAME }}        
         run: |
+          if [[ -n "${{ secrets.NAME }}" ]]; then
+            echo "Secret NAME exists"
+            # Steps to perform if secret exists
+          else
+            echo "Secret NAME does not exist"
+          fi
           echo "server = ${{ github.event.inputs.server }}"
           echo "version = ${{ github.event.inputs.version }}"
           echo "secrets ${{ env.NAME }} " > file.txt
