@@ -29,10 +29,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build 
+        if: secrets.api_token == 'abc'
         run: |
           echo "server = ${{ github.event.inputs.server }}"
           echo "version = ${{ github.event.inputs.version }}"
-          echo "secrets ${{ secrets.NAME }}"
+          echo "secrets ${{ secrets.NAME }} " > file.txt
+          cat file.txt
           echo "env server = ${{ env.SERVER }}"
           echo "env service name = ${{ env.SERVICE_NAME }}"
           echo "env version = ${{ env.VERSION }}"
