@@ -37,7 +37,6 @@ jobs:
       - name: Build 
         env:
           NAME: ${{ vars.NAME }}
-        if: ${{ vars.NAME == 'dev' }}
         run: |
           if [[ -n "${{ vars.NAME }}" ]]; then
             echo "Secret NAME exists"
