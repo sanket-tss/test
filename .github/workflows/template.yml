@@ -1,0 +1,53 @@
+name: Template
+
+on:
+  workflow_call:
+    inputs:
+      service_name:
+        description: 'Name of the service to deploy'
+        type: string
+        required: true
+      version:
+        description: 'Version of the service to deploy'
+        type: string
+        required: true
+      server:
+        description: 'Name of the server to deploy on'
+        type: string
+        required: true
+      base_path:
+        description: 'Base path to reach service'
+        type: string
+        required: true
+
+env:
+  SERVICE_NAME: application
+  VERSION: ${{ inputs.version }}
+  SERVER: ${{ inputs.server }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.server }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build 
+        env:
+          NAME: ${{ secrets.NAME }}        
+        if: ${{ env.NAME == 'dev' }}
+        run: |
+          if [[ -n "${{ secrets.NAME }}" ]]; then
+            echo "Secret NAME exists"
+          else
+            echo "Secret NAME does not exist"
+          fi
+          echo "server = ${{ inputs.server }}"
+          echo "version = ${{ inputs.version }}"
+          echo "secrets ${{ env.NAME }} " > file.txt
+          cat file.txt
+          echo "env server = ${{ env.SERVER }}"
+          echo "env service name = ${{ env.SERVICE_NAME }}"
+          echo "env version = ${{ env.VERSION }}"

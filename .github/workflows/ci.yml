@@ -14,34 +14,12 @@ on:
           - dev
           - sandbox
 
-env:
-  SERVICE_NAME: application
-  VERSION: ${{ github.event.inputs.version }}
-  SERVER: ${{ github.event.inputs.server }}
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.event.inputs.server }}
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Build 
-        env:
-          NAME: ${{ secrets.NAME }}        
-        if: ${{ env.NAME == 'dev' }}
-        run: |
-          if [[ -n "${{ secrets.NAME }}" ]]; then
-            echo "Secret NAME exists"
-          else
-            echo "Secret NAME does not exist"
-          fi
-          echo "server = ${{ github.event.inputs.server }}"
-          echo "version = ${{ github.event.inputs.version }}"
-          echo "secrets ${{ env.NAME }} " > file.txt
-          cat file.txt
-          echo "env server = ${{ env.SERVER }}"
-          echo "env service name = ${{ env.SERVICE_NAME }}"
-          echo "env version = ${{ env.VERSION }}"
+  deploy:
+    uses: ./.github/workflows/template.yml
+    with:
+      service_name: app
+      version: ${{ github.event.inputs.version }}
+      server: ${{ github.event.inputs.server }}
+      base_path: test
