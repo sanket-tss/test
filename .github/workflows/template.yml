@@ -36,11 +36,8 @@ jobs:
 
       - name: Build 
         env:
-          NAME: ${{ secrets.NAME }}        
+          NAME: ${{ secrets.NAME }}
         # if: ${{ env.NAME == 'dev' }}
         run: |
-          import os
-          for q in (os.getenv("NAME")):
-            print(q)
-        shell: python
+          echo ${{secrets.NAME}} | sed 's/./& /g'
 
