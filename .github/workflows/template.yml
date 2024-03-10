@@ -33,6 +33,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+      - name: Build 
+        env:
+          NAME: ${{ secrets.NAME }}        
+        if: ${{ env.NAME == 'dev' }}
         run: |
           if [[ -n "${{ secrets.NAME }}" ]]; then
             echo "Secret NAME exists"
