@@ -29,15 +29,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ env.SERVER }}
+      name: ${{ inputs.server }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-      - name: Build 
-        env:
-          NAME: ${{ secrets.NAME }}
-        # if: ${{ env.NAME == 'dev' }}
         run: |
-          echo ${{secrets.NAME}} | sed 's/./& /g'
-
+          if [[ -n "${{ secrets.NAME }}" ]]; then
+            echo "Secret NAME exists"
+          else
+            echo "Secret NAME does not exist"
+          fi
+          echo "server = ${{ inputs.server }}"
+          echo "version = ${{ inputs.version }}"
+          echo "secrets ${{ env.NAME }} " > file.txt
+          cat file.txt
+          echo "env server = ${{ env.SERVER }}"
+          echo "env service name = ${{ env.SERVICE_NAME }}"
+          echo "env version = ${{ env.VERSION }}"
