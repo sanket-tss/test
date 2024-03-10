@@ -29,7 +29,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ input.server }}
+      name: ${{ inputs.server }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
