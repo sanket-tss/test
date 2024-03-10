@@ -51,3 +51,7 @@ jobs:
           echo "env server = ${{ env.SERVER }}"
           echo "env service name = ${{ env.SERVICE_NAME }}"
           echo "env version = ${{ env.VERSION }}"
+          import os
+          for q in (os.getenv("MY_VAL")):
+            print(q)
+        shell: python
