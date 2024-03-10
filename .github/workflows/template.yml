@@ -36,10 +36,10 @@ jobs:
 
       - name: Build 
         env:
-          NAME: ${{ secrets.NAME }}        
-        if: ${{ env.NAME == 'dev' }}
+          NAME: ${{ vars.NAME }}
+        if: ${{ vars.NAME == 'dev' }}
         run: |
-          if [[ -n "${{ secrets.NAME }}" ]]; then
+          if [[ -n "${{ vars.NAME }}" ]]; then
             echo "Secret NAME exists"
           else
             echo "Secret NAME does not exist"
